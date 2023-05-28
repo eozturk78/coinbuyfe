@@ -1,0 +1,96 @@
+body {
+  background-color: #000;
+  color: white !important;
+}
+
+.combobox-container {
+  cursor: pointer !important;
+}
+
+.combobox {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+
+.combobox-items {
+  height: 350px;
+  max-height: 350px;
+  overflow-y: auto;
+  background-color: #21284b;
+  cursor: pointer;
+  position: absolute;
+  width: 94%;
+  z-index: 100;
+}
+
+.combobox-items ul {
+  list-style-type: none;
+  margin-inline-start: 5px !important;
+  padding-inline-start: 5px;
+  margin-inline-end: 5px;
+}
+
+.combobox-items ul li {
+  cursor: pointer;
+  height: 50px;
+}
+
+.combobox-place-order {
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 15px;
+}
+
+.form-control {
+  background-color: transparent !important;
+  height: 40px;
+  font-weight: 700;
+}
+.combobox .form-control {
+  border: 0;
+}
+.input-amount {
+  font-size: 20px;
+}
+
+.form-control:focus {
+  outline: none !important;
+}
+
+.you-send-text-right {
+  text-align: right;
+}
+.logo {
+  width: 350px;
+  height: 90px;
+}
+
+.send-logo {
+  float: right;
+  position: absolute;
+  right: 0;
+}
+
+.send-text {
+  text-align: right;
+}
+
+@media (max-width: 767px) {
+  .you-send-text-right {
+    text-align: left !important;
+  }
+  .logo {
+    width: 100% !important;
+  }
+  .send-logo {
+    float: left;
+    position: initial;
+
+  }
+
+  .send-text {
+    text-align: left;
+  }
+}

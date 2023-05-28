@@ -1,0 +1,68 @@
+<div class="combobox-container" style="cursor: pointer">
+  <div
+    class="combobox"
+    style="cursor: pointer"
+    [ngStyle]="{ 'border-color': chosenItem?.color }"
+  >
+    <input
+      class="form-control"
+      id="search"
+      [(ngModel)]="searchText"
+      *ngIf="isOpenList"
+      style="border-radius: 0px"
+      placeholder="{{ 'search_currency' | translate }}"
+      #searchElement
+    />
+    <div
+      class="combobox-place-order"
+      *ngIf="!isOpenList && chosenItem == null"
+      style="cursor: pointer"
+    >
+      <div style="float: left" translate="choose_currency"></div>
+      <div style="float: right">
+        <i class="fa fa-caret-down"></i>
+      </div>
+    </div>
+
+    <div *ngIf="!isOpenList && chosenItem != null" (click)="onOpenList()">
+      <input
+        class="form-control input-amount"
+        id="amount"
+        [attr.readonly]="isAmountDisabled"
+        style="width: 70%; float: left"
+        #amountElement
+        [ngStyle]="{ color: chosenItem.color }"
+        [(ngModel)]="resultAmount"
+        (input)="onChangeAmunt()"
+        [textMask]="{ mask: moneyMaskSettings }"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+      />
+      <div
+        style="
+          float: right;
+          vertical-align: middle;
+          margin-top: 7px;
+          margin-right: 10px;
+        "
+      >
+        <img src="{{ chosenItem.logo }}" width="20px" height="20px" />
+        <span
+        [ngStyle]="{ 'color': chosenItem?.color }"> {{ chosenItem.code }}</span>&nbsp;
+        <i class="fa fa-caret-down"
+        [ngStyle]="{ 'color': chosenItem?.color }"></i>
+      </div>
+    </div>
+  </div>
+  <div class="combobox-items" *ngIf="isOpenList">
+    <ul>
+      <li *ngFor="let item of onSearchItem()" (click)="onChooseItem(item)">
+        <img src="{{ item.logo }}" width="40px" height="40px" />&nbsp;
+        <span [ngStyle]="{ color: item.color }">{{ item.name }}</span>
+        <div style="float: right" [ngStyle]="{ color: item.color }">
+          {{ item.code }}
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

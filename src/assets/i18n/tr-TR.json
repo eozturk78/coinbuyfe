@@ -1,0 +1,15 @@
+{
+  "send":"Send",
+  "receive":"Receive",
+  "destination":"Address",
+  "choose_currency":"Currency Choose",
+  "search_currency":"Search",
+  "order_type":"Order Type",
+  "copied":"Copied",
+  "you_send":"Send",
+  "you_receive":"Receive",
+  "order_id":"Order Id",
+  "time_remaining":"Time Remaining",
+  "created_date":"Created Date",
+  "token":"Token"
+}

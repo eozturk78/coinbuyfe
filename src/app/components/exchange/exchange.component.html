@@ -1,0 +1,295 @@
+<div class="container-fluid">
+  <div class="row" *ngIf="data != null">
+    <div class="col-12">
+      <img src="../../../assets/logo/logo.png" class="logo" />
+    </div>
+    <div class="col-sm-6 offset-sm-3 col-12" *ngIf="exchangeInfo == null">
+      <div class="row">
+        <div class="col-sm-6 col-12">
+          <div [ngStyle]="{ color: sendChosenItem?.color }">
+            <label translate="send"></label>&nbsp;<span
+              *ngIf="sendChosenItem != null"
+              >({{ sendChosenItem?.name }})</span
+            >
+          </div>
+          <app-combobox
+            [data]="data"
+            (onEmitChooseItem)="onSendChooseItem($event)"
+            (onCompletedEnterAmount)="onCompleteEnterAmount($event)"
+            (onFocusInput)="onFocusInput($event)"
+            [defaultItem]="sendChosenItem"
+            [defaultValue]="50"
+          ></app-combobox>
+          <div style="width: 100%" *ngIf="isFocusedInput == true">
+            <div style="float: left; width: 50%" *ngIf="result != null">
+              Min : {{ result.from.min }}
+            </div>
+            <div style="float: right" *ngIf="result != null">
+              Max : {{ result.from.max }}
+            </div>
+          </div>
+          <div *ngIf="isFocusedInput == false">
+            <div style="float: left" *ngIf="result != null">
+              1 {{ result.from.code }} ~ {{ result.from.rate }}
+              {{ result.to.code }}
+            </div>
+            <div style="float: right" *ngIf="result != null">
+              <span>{{ result?.from?.usd }} $</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-12">
+          <div [ngStyle]="{ color: receiveChosenItem?.color }">
+            <label translate="receive"></label>&nbsp;<span
+              *ngIf="receiveChosenItem != null"
+              >({{ receiveChosenItem?.name }})</span
+            >
+          </div>
+          <app-combobox
+            [data]="data"
+            [isAmountDisabled]="true"
+            (onEmitChooseItem)="onReceiveChooseItem($event)"
+            (onFocusInput)="onFocus2Input($event)"
+            [result]="result"
+            [resultAmount]="result?.to?.amount"
+            [defaultItem]="receiveChosenItem"
+          ></app-combobox>
+          <div style="width: 100%" *ngIf="isFocused2Input == true">
+            <div style="float: left; width: 50%" *ngIf="result != null">
+              Min : {{ result.to.min }}
+            </div>
+            <div style="float: right" *ngIf="result != null">
+              Max : {{ result.to.max }}
+            </div>
+          </div>
+          <div *ngIf="isFocused2Input == false">
+            <div style="float: left" *ngIf="result != null">
+              1 {{ result.to.code }} ~ {{ result.to.rate }}
+              {{ result.from.code }}
+            </div>
+            <div style="float: right" *ngIf="result != null">
+              <span>{{ result?.to?.usd }} $</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">&nbsp;</div>
+        <div class="col-12">
+          <label translate="destination"></label><br>
+          <input class="form-control" [(ngModel)]="destination" style="width: 90%;float: left;"/>&nbsp;
+          <i class="fa fa-paste" style="font-size: 24px;margin-top: 10px;" (click)="onPaste()"></i>&nbsp;
+
+
+        </div>
+        <div class="col-12">&nbsp;</div>
+        <div class="col-6">
+          <label translate="order_type"></label><br />
+          <div *ngIf="orderType == 'float'">
+            <button
+              class="btn btn-light"
+              translate="Fixed rate (1.0%)"
+              (click)="onChangeOrderType('fixed')"
+            ></button>
+            &nbsp;
+            <button
+              class="btn btn-danger"
+              translate="Float rate (0.5%)"
+              (click)="onChangeOrderType('float')"
+            ></button>
+          </div>
+          <div *ngIf="orderType == 'fixed'">
+            <button
+              class="btn btn-danger"
+              translate="Fixed rate (1.0%)"
+              (click)="onChangeOrderType('fixed')"
+            ></button>
+            &nbsp;
+            <button
+              class="btn btn-light"
+              translate="Float rate (0.5%)"
+              (click)="onChangeOrderType('float')"
+            ></button>
+          </div>
+        </div>
+        <div class="col-6 text-right">
+          <button
+            class="btn btn-primary"
+            style="margin-top: 30px"
+            (click)="onCreate()"
+            [disabled]="startToSendEP"
+          >
+          <i class="fa" [ngClass]="{ 'fa-spin fa-spinner': startToSendEP }"></i
+            >
+          <span>Exchange Now</span>
+        </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 offset-sm-3 col-12" *ngIf="exchangeInfo != null">
+      <div class="row" *ngIf="sendFromCurrency != null">
+        <div class="col-sm-6 col-12">
+          <div class="media">
+            <img
+              class="mr-3 send-logo"
+              src="{{ sendFromCurrency.logo }}"
+              width="90"
+              height="90"
+            />
+            <div class="media-body send-text" style="margin-right: 100px;" >
+              <b translate="you_send"></b>
+              <div
+                style="font-size: 24px"
+                [ngStyle]="{ color: sendFromCurrency.color }"
+              >
+                {{ exchangeInfo.from.amount }}
+                {{ sendFromCurrency.code }}
+              </div>
+              <span style="overflow-wrap: break-word; font-size: 12px">{{
+                exchangeInfo.from.address | slice : 0 : 42
+              }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-12">
+          <div class="media">
+            <img
+              class="mr-3"
+              src="{{ sendToCurrency.logo }}"
+              width="90"
+              height="90"
+            />
+            <div class="media-body">
+              <b translate="you_receive"></b>
+              <div
+                style="font-size: 24px"
+                [ngStyle]="{ color: sendToCurrency.color }"
+              >
+                {{ exchangeInfo.to.amount }}
+                {{ sendToCurrency.code }}
+              </div>
+              <span style="overflow-wrap: break-word; font-size:12px">{{
+                exchangeInfo.to.address | slice : 0 : 42
+              }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <br />
+          <br />
+        </div>
+        <div class="col-sm-2 col-12">
+          <div class="row">
+            <div class="col-sm-12 col-6">
+              <b translate="order_id"></b>
+              <div style="position: relative">
+                <span style="font-size: 20px"
+                [ngStyle]="{ color: sendToCurrency.color }">{{ exchangeInfo.id }}</span
+                >&nbsp;&nbsp;&nbsp;<i
+                  class="fa fa-copy"
+                  (click)="onCopy(exchangeInfo.id,20)"
+                  style="font-size: 20px; cursor: pointer"
+                ></i>
+                <div
+                  class="copied-text"
+                  style="
+                    position: absolute;
+                    background-color: red;
+                    padding: 5px;
+                    margin-top: -10px;
+                    border-radius: 5px;
+                  "
+                  translate="copied"
+                  *ngIf="copiedType == 20"
+                ></div>
+              </div>
+              <hr style="border-top: 1px solid rgba(187, 187, 187, 0.1)" />
+            </div>
+            <div class="col-sm-12 col-6">
+              <b translate="time_remaining"></b>
+              <div
+                style="font-size: 20px"
+                [ngStyle]="{ color: sendToCurrency.color }"
+              >
+                <span
+                  *ngIf="exchangeInfo.status == 'EXPIRED'"
+                  translate="{{ exchangeInfo.status }}"
+                ></span>
+                <span *ngIf="exchangeInfo.status != 'EXPIRED'">
+                  {{ time }}</span
+                >
+              </div>
+              <hr style="border-top: 1px solid rgba(187, 187, 187, 0.1)" />
+            </div>
+            <div class="col-sm-12 col-6">
+              <b translate="order_type"></b>
+              <div>{{ exchangeInfo.type }}</div>
+              <hr style="border-top: 1px solid rgba(187, 187, 187, 0.1)" />
+            </div>
+            <div class="col-sm-12 col-6">
+              <b translate="created_date"></b>
+              <div>{{ createdDate | date : "dd/MM/yyyy HH:mm" }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-12" style="overflow-wrap: break-word">
+          <span
+            style="font-size: 24px"
+            [ngStyle]="{ color: sendFromCurrency.color }"
+            >{{ exchangeInfo.from.amount }} {{ sendFromCurrency.code }}</span
+          ><br />
+          <div style="position: relative">
+            <span style="font-size: 15px">{{ exchangeInfo.from.address }}</span
+            >&nbsp;&nbsp;&nbsp;<i
+              class="fa fa-copy"
+              (click)="onCopy(exchangeInfo.from.address,10)"
+              style="font-size: 20px; cursor: pointer"
+            ></i>
+            <div
+              class="copied-text"
+              style="
+                position: absolute;
+                background-color: red;
+                padding: 5px;
+                margin-top: -10px;
+                border-radius: 5px;
+              "
+              translate="copied"
+              *ngIf="copiedType == 10"
+            ></div>
+          </div>
+
+          <br />
+
+          <b translate="token"></b><br />
+          {{ exchangeInfo.token }}
+        </div>
+        <div class="col-sm-4 col-12 text-center">
+          <div *ngFor="let item of qrInfo">
+            <div
+              style="
+                background-color: white;
+                padding: 10px;
+                text-align: center;
+                border-radius: 10px;
+              "
+              *ngIf="item.checked"
+            >
+              <img src="{{ item.src }}" width="250" height="250" />
+            </div>
+          </div>
+          <button
+            *ngFor="let item of qrInfo"
+            class="btn"
+            style="width: 120px; margin-top: 5px; margin-left: 2px"
+            [ngClass]="{
+              'btn-danger': item.checked,
+              'btn-light': !item.checked
+            }"
+            (click)="onCheck(item)"
+            translate="{{ item.title }}"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
