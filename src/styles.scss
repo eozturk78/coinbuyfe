@@ -1,2 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
-@import './styles/main.scss';
+@import "./styles/main.scss";
+
+.modal-body p {
+  color: #0e0d0d !important;
+}
+
+@media (max-width: 768px) {
+  .destination-input {
+    width: 80%;
+  }
+}
+
+@media (min-width: 769px) {
+  .destination-input {
+    width: 90%;
+  }
+}
+
+.mdl-small-size {
+  max-width: 100% !important;
+}
+
+.mdl-small-size .modal-content {
+  background-color: transparent;
+  border: 0px;
+}
+
+.origin-video{
+  height: 100vh;
+  background-color: #44424270!important;
+}
+
+.mdl-small-size .modal-body {
+  padding: 0 !important;
+}
+.modal-body{
+  height: 100vh;
+}
+#description{
+  margin-top: 100px;
+}

@@ -1,0 +1,34 @@
+<div class="modal-body" style="position: relative;">
+  <div
+    class="close-button-container"
+    style="position: absolute; right: 0; top: -15;    z-index: 1000;"
+  >
+    <div class="display-table-cell" (click)="onClose()">
+      <i class="fa fa-times"></i>
+    </div>
+  </div>
+
+  <ngx-scanner-qrcode
+    #action="scanner"
+    (event)="onReady()"
+    [isBeep]="false"
+    [config]="config"
+    id="qrCode"
+    style="display: none"
+  ></ngx-scanner-qrcode>
+  <div
+    id="description"
+    style="display: block; color: #b4b2b2; text-align: center; height: 250px;"
+  >
+    <span
+    translate="access_camera"></span>
+  </div>
+  <!-- start -->
+  <button
+    (click)="action.isStart ? action.stop() : action.start()"
+    id="btn"
+    style="display: none"
+  >
+    {{ action.isStart ? "Stop" : "Start" }}
+  </button>
+</div>

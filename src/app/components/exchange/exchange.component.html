@@ -75,9 +75,24 @@
 
         <div class="col-12">&nbsp;</div>
         <div class="col-12">
-          <label translate="destination"></label><br>
-          <input class="form-control" [(ngModel)]="destination" style="width: 90%;float: left;"/>&nbsp;
-          <i class="fa fa-paste" style="font-size: 24px;margin-top: 10px;" (click)="onPaste()"></i>&nbsp;
+          <label translate="destination"></label><br />
+          <input
+            class="form-control destination-input"
+            [(ngModel)]="destination"
+            style="float: left"
+          />&nbsp;
+          <i
+            class="fa fa-paste"
+            style="font-size: 24px; margin-top: 10px"
+            (click)="onPaste()"
+          ></i
+          >&nbsp;
+          <i
+            class="fa fa-qrcode"
+            style="font-size: 24px; margin-top: 10px"
+            (click)="onOpenModal()"
+          ></i
+          >&nbsp;
 
 
         </div>
@@ -118,10 +133,12 @@
             (click)="onCreate()"
             [disabled]="startToSendEP"
           >
-          <i class="fa" [ngClass]="{ 'fa-spin fa-spinner': startToSendEP }"></i
-            >
-          <span>Exchange Now</span>
-        </button>
+            <i
+              class="fa"
+              [ngClass]="{ 'fa-spin fa-spinner': startToSendEP }"
+            ></i>
+            <span>Exchange Now</span>
+          </button>
         </div>
       </div>
     </div>
@@ -135,7 +152,7 @@
               width="90"
               height="90"
             />
-            <div class="media-body send-text" style="margin-right: 100px;" >
+            <div class="media-body send-text" style="margin-right: 100px">
               <b translate="you_send"></b>
               <div
                 style="font-size: 24px"
@@ -167,7 +184,7 @@
                 {{ exchangeInfo.to.amount }}
                 {{ sendToCurrency.code }}
               </div>
-              <span style="overflow-wrap: break-word; font-size:12px">{{
+              <span style="overflow-wrap: break-word; font-size: 12px">{{
                 exchangeInfo.to.address | slice : 0 : 42
               }}</span>
             </div>
@@ -182,11 +199,13 @@
             <div class="col-sm-12 col-6">
               <b translate="order_id"></b>
               <div style="position: relative">
-                <span style="font-size: 20px"
-                [ngStyle]="{ color: sendToCurrency.color }">{{ exchangeInfo.id }}</span
+                <span
+                  style="font-size: 20px"
+                  [ngStyle]="{ color: sendToCurrency.color }"
+                  >{{ exchangeInfo.id }}</span
                 >&nbsp;&nbsp;&nbsp;<i
                   class="fa fa-copy"
-                  (click)="onCopy(exchangeInfo.id,20)"
+                  (click)="onCopy(exchangeInfo.id, 20)"
                   style="font-size: 20px; cursor: pointer"
                 ></i>
                 <div
@@ -241,7 +260,7 @@
             <span style="font-size: 15px">{{ exchangeInfo.from.address }}</span
             >&nbsp;&nbsp;&nbsp;<i
               class="fa fa-copy"
-              (click)="onCopy(exchangeInfo.from.address,10)"
+              (click)="onCopy(exchangeInfo.from.address, 10)"
               style="font-size: 20px; cursor: pointer"
             ></i>
             <div

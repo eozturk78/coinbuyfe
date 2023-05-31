@@ -11,5 +11,7 @@
   "order_id":"Order Id",
   "time_remaining":"Time Remaining",
   "created_date":"Created Date",
-  "token":"Token"
+  "token":"Token",
+  "close":"Kapat",
+  "access_camera":"Trying to access camera please wait"
 }

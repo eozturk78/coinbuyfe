@@ -1,6 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { QrCodeReaderComponent } from './../../modals/qr-code-reader/qr-code-reader.component';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { QRCodeComponent } from 'angularx-qrcode';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { CoinbuyApiService } from 'src/app/services/coinbuy-api/coinbuy-api.service';
+import { ZXingScannerComponent } from '@zxing/ngx-scanner';
+import { Result } from '@zxing/library';
 
 @Component({
   selector: 'app-exchange',
@@ -10,7 +15,8 @@ import { CoinbuyApiService } from 'src/app/services/coinbuy-api/coinbuy-api.serv
 export class ExchangeComponent implements OnInit {
   constructor(
     private coinBuyService: CoinbuyApiService,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private modalService: BsModalService
   ) {
     this.orderId = this.router.snapshot.params['orderId'];
     this.token = this.router.snapshot.params['token'];
@@ -31,6 +37,7 @@ export class ExchangeComponent implements OnInit {
   expirationDate: any;
   startToSendEP = false;
   output: string = '';
+  qrData: any;
   ngOnInit(): void {
     if (this.orderId != null && this.token != null) {
       this.coinBuyService
@@ -210,5 +217,22 @@ export class ExchangeComponent implements OnInit {
       this.destination = clipText;
     });
   }
+  onOpenModal() {
+    this.modalService.show(QrCodeReaderComponent, {
+      ariaLabelledBy: 'modal-basic-title',
+      class: 'mdl-small-size',
+      backdrop: 'static',
+      keyboard: true,
+      initialState: {
+        onGetData: (data: any) => {
+          this.destination = data;
+          this.modalService.hide();
+        },
+      },
+    });
+  }
 
+  onGetData(data: any) {
+    this.destination = data[0].value;
+  }
 }

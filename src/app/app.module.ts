@@ -13,7 +13,9 @@ import { AuthInterceptor } from './services/http/auth-interceptor';
 import { HttpErrorHandler } from './services/http/http-error-handler.service';
 import { HttpServiceService } from './services/http/http-service.service';
 import { FormsModule } from '@angular/forms';
-import { TextMaskModule } from 'angular2-text-mask';
+import { QrCodeReaderComponent } from './modals/qr-code-reader/qr-code-reader.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 
 @NgModule({
@@ -21,11 +23,15 @@ import { TextMaskModule } from 'angular2-text-mask';
     AppComponent,
     ExchangeComponent,
     MainLayoutComponent,
-    ComboboxComponent
+    ComboboxComponent,
+    QrCodeReaderComponent
   ],
   imports: [
     BrowserModule,
+    ModalModule,
     HttpClientModule,
+    NgxScannerQrcodeModule,
+    ModalModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -34,7 +40,6 @@ import { TextMaskModule } from 'angular2-text-mask';
       },
     }),
     FormsModule,
-    TextMaskModule,
     AppRoutingModule,
   ],
   providers: [
